@@ -1,30 +1,32 @@
-const express = require('express')
-const fs = require('fs/promises')
-const path = require('path')
-const app = express()
+/* eslint-disable no-undef */
+import express from 'express'
+import { fileURLToPath } from 'url'
+import { dirname, join } from 'path'
+import { readData, writeData } from './data-operations.js'
+import { access, writeFile } from 'fs/promises'
 
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+
+const app = express()
 app.use(express.json())
 
 // local store
-const DATA_FILE = path.join(__dirname, 'data-store.json')
+const DATA_FILE = join(__dirname, 'data-store.json')
 
 // init file if !file
 async function initDataFile() {
   try {
-    await fs.access(DATA_FILE)
+      await access(DATA_FILE)
   } catch {
-    await fs.writeFile(DATA_FILE, JSON.stringify({}))
+      // create initial books resource
+      const initialData = {
+          books: [
+              { id: '1', title: 'Test Book 1', author: 'Test Author 1' }
+          ]
+      }
+      await writeFile(DATA_FILE, JSON.stringify(initialData, null, 2))
   }
-}
-
-
-async function readData() {
-  const data = await fs.readFile(DATA_FILE, 'utf8')
-  return JSON.parse(data)
-}
-
-async function writeData(data) {
-  await fs.writeFile(DATA_FILE, JSON.stringify(data, null, 2))
 }
 
 
