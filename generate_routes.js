@@ -13,7 +13,8 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
 const program = new Command()
-const SCHEMA_FILE = join(__dirname, 'data-schema.json')
+const SCHEMA_FILE = join(__dirname, 'data_schema.json')
+const STORE_FILE = join(__dirname, 'data_store.json')
 
 // route templates
 const templates = {
@@ -104,6 +105,37 @@ async function updateSchema(resource) {
   }
 }
 
+async function updateDataStore(resource) {
+  try {
+    let store = {}
+
+    // read/init store
+    try {
+      const storeContent = await fs.readFile(STORE_FILE, 'utf8')
+      store = JSON.parse(storeContent)
+    } catch {
+      store = {}
+    }
+
+    // update store !resource_data.exists?
+    if (!store[resource]) {
+      store[resource] = [
+        {
+          id: '1',
+          name: `Name of this ${resource} entry`,
+          description: `Description of this ${resource} entry`,
+        },
+      ]
+      await fs.writeFile(STORE_FILE, JSON.stringify(store, null, 2))
+      console.log(kleur.green().bold(`✓ Data-store updated for resource: ${resource}`))
+    } else {
+      console.log(kleur.yellow().bold(`Data-store for ${resource} already exists.`))
+    }
+  } catch (error) {
+    console.error(kleur.red().bold('Error updating data-store:', error.message))
+  }
+}
+
 // generate routes
 async function generateRoute(resource, param, method) {
   try {
@@ -126,11 +158,11 @@ async function generateRoute(resource, param, method) {
 
     // apend new route before app.listen in server.js
     serverContent = serverContent.replace('app.listen(', `${newRoute}\n\napp.listen(`)
-
     await fs.writeFile(serverPath, serverContent)
 
-    // update schema
+    // update schema and data store
     await updateSchema(resource)
+    await updateDataStore(resource)
 
     console.log(kleur.green().bold(`✓ Generated ${method.toUpperCase()} /${resource}${param ? `/:${param}` : ''}`))
   } catch (error) {

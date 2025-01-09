@@ -2,3 +2,5 @@ node_modules/
 .history/
 data.json
 data-store.json
+a.js
+b.js

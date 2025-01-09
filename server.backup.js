@@ -98,20 +98,7 @@ app.delete('/:resource/:id', async (req, res) => {
 // serve
 const PORT = process.env.PORT || 3000
 initDataFile().then(() => {
-  
-    app.get('/modelRouteTest2/:id', async (req, res) => {
-      try {
-        const data = await readData()
-        const item = (data.modelRouteTest2 || []).find(item => item.id === req.params.id)
-        if (!item) return res.status(404).json({ error: 'modelRouteTest2 not found' })
-        res.json(item)
-      } catch (error) {
-        res.status(500).json({ error: error.message })
-      }
-    })
-  
-
-app.listen(PORT, () => {
+  app.listen(PORT, () => {
     console.log(`server running on port ${PORT}`)
   })
 })
