@@ -1,17 +1,23 @@
 {
-  "name": "api-gen",
+  "name": "api-codegen",
   "version": "1.0.0",
   "description": "API route generator",
   "main": "server.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "generate": "./generate-route.js"
+    "generate": "./generate_routes.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "express": "^4.21.2"
+    "commander": "^11.0.0",
+    "crypto": "^1.0.1",
+    "express": "^4.17.1",
+    "fast-glob": "^3.3.3",
+    "kleur": "^4.1.5"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "eslint": "^9.17.0",
+    "globals": "^15.14.0"
   }
 }

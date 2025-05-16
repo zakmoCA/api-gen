@@ -1,4 +1,8 @@
 node_modules/
 .history/
+*DS_Store
 data.json
-data-store.json
+data_store.json
+src/notes.md
+src/data/data_store.json
+deprecated/
