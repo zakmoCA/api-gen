@@ -4,5 +4,6 @@ node_modules/
 data.json
 data_store.json
 src/notes.md
-src/data/data_store.json
+src/data/
 deprecated/
+backups/
