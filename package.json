@@ -1,17 +1,16 @@
 {
-  "name": "api-codegen",
+  "name": "api-gen",
   "version": "1.0.0",
-  "description": "API route generator",
-  "main": "server.js",
+  "description": "Generate REST resource boilerplate into the current project",
   "type": "module",
+  "bin": {
+    "api-gen": "./bin/api-gen.js"
+  },
   "scripts": {
-    "start": "node server.js",
-    "generate": "./generate_routes.js"
+    "lint": "eslint ."
   },
   "dependencies": {
-    "commander": "^11.0.0",
-    "crypto": "^1.0.1",
-    "express": "^4.17.1",
+    "commander": "^14.0.1",
     "fast-glob": "^3.3.3",
     "kleur": "^4.1.5"
   },
@@ -19,5 +18,8 @@
     "@eslint/js": "^9.17.0",
     "eslint": "^9.17.0",
     "globals": "^15.14.0"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }
